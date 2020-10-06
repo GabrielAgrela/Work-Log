@@ -24,6 +24,14 @@ echo $_SESSION["username"];
 		</style>
 	</head>
 	<body>
+		<table border = "1">
+		<tr>
+			<td>id</td>
+			<td>descrição</td>
+			<td>inicio</td>
+			<td>fim</td>
+			<td>tempo total</td>
+		</tr>
 		<?php if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="start") :?>
 			<form action="index.php" method="post">
 				<input type="submit" name="startWork" value="stop" />
@@ -33,20 +41,50 @@ echo $_SESSION["username"];
 				<input type="submit" name="startWork" value="start" />
 			</form>
 		<?php endif; ?>
+			<?php
+			$sql = "SELECT id, start, finish FROM worklog WHERE id_user = ?";
 
-		<table border = "1">
-			<tr>
-				<td>descrição</td>
-				<td>inicio</td>
-				<td>fim</td>
-				<td>tempo total</td>
-			</tr>
-			<tr>
-				<td>realização do login</td>
-				<td>18:00</td>
-				<td>19:00</td>
-				<td>1:00</td>
-			</tr>
+			if($stmt = mysqli_prepare($link, $sql)){
+				// Bind variables to the prepared statement as parameters
+				mysqli_stmt_bind_param($stmt, "i", $_SESSION["id"]);
+
+
+				// Attempt to execute the prepared statement
+				if(mysqli_stmt_execute($stmt)){
+					// Store result
+					mysqli_stmt_store_result($stmt);
+
+					// Check if username exists, if yes then verify password
+					if(mysqli_stmt_num_rows($stmt) >= 1)
+					{
+						mysqli_stmt_bind_result($stmt, $id, $start, $finish);
+						while (mysqli_stmt_fetch($stmt))
+						{
+							echo "<tr>";
+							echo "<td>".$id."</td>";
+							echo "<td>coisando coisas</td>";
+							echo "<td>".$start."</td>";
+							echo "<td>".$finish."</td>";
+							$datetime1 = strtotime($start);
+							$datetime2 = strtotime($finish);
+							$secs = $datetime2 - $datetime1;// == <seconds between the two times>
+							$minutes = $secs / 60;
+							echo "<td>".round($minutes)."</td>";
+							echo "</tr>";
+						}
+					}
+					else
+					{
+						echo"1";
+					}
+				} else{
+					echo "Oops! Something went wrong. Please try again later.";
+				}
+
+				// Close statement
+				mysqli_stmt_close($stmt);
+			}
+ 			?>
 		</table>
 	</body>
 </html>
@@ -93,4 +131,5 @@ echo $_SESSION["username"];
             mysqli_stmt_close($stmt);
         }
     }
+
 ?>
