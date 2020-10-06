@@ -85,14 +85,17 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 		</style>
 	</head>
 	<body>
-		<table border = "1">
+
+		<table class = "table">
+		<thead>
 		<tr>
-			<td>id</td>
-			<td>descrição</td>
-			<td>inicio</td>
-			<td>fim</td>
-			<td>tempo total</td>
+			<th scope="col">#</th>
+			<th scope="col">descrição</th>
+			<th scope="col">inicio</th>
+			<th scope="col">fim</th>
+			<th scope="col">tempo total</th>
 		</tr>
+		</thead>
 		<?php if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="start") :?>
 			<form action="index.php" method="post">
 				<input type="submit" name="startWork" value="stop" />
@@ -123,7 +126,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 						while (mysqli_stmt_fetch($stmt))
 						{
 							echo "<tr>";
-							echo "<td>".$id."</td>";
+							echo "<th scope='row'>".$id."</th>";
 							echo "<td>coisando coisas</td>";
 							echo "<td>".date('d-m-Y H:i', strtotime($start))."</td>";
 							if ($start == $finish)
@@ -134,7 +137,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 							$datetime2 = strtotime($finish);
 							$secs = $datetime2 - $datetime1;// == <seconds between the two times>
 							$minutes = $secs / 60;
-							echo "<td>".round($minutes)."</td>";
+							echo "<td>".round($minutes)." m</td>";
 							echo "</tr>";
 						}
 					}
