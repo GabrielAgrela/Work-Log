@@ -9,8 +9,69 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true)
     header("location: login.php");
     exit;
 }
-echo $_SESSION["username"];
+echo "Olá, ".$_SESSION["username"].".";
+echo "<br>";
+if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="start")
+{
 
+	$sql = "SELECT * FROM worklog WHERE finished = 0 AND id_user = ? ORDER BY id DESC LIMIT 1";
+	if($stmt = mysqli_prepare($link, $sql))
+	{
+		 mysqli_stmt_bind_param($stmt, "i", $_SESSION["id"]);
+		if(mysqli_stmt_execute($stmt))
+		{
+			/* store result */
+			mysqli_stmt_store_result($stmt);
+
+			if(mysqli_stmt_num_rows($stmt) == 0)
+			{
+				$sql = "INSERT INTO worklog (id_user,start, finish) VALUES (?, ?, ?)";
+
+				if($stmt = mysqli_prepare($link, $sql))
+				{
+					$datetemp = date('Y-m-d H:i:s');
+					// Bind variables to the prepared statement as parameters
+					mysqli_stmt_bind_param($stmt, "iss", $_SESSION["id"],$datetemp, $datetemp);
+
+					// Attempt to execute the prepared statement
+					if(mysqli_stmt_execute($stmt))
+					{
+						echo "";
+					} else{
+						echo "Something went wrong. Please try again later.";
+					}
+					// Close statement
+					mysqli_stmt_close($stmt);
+				}
+			}
+		}
+	}
+}
+if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
+{
+	$datetemp = date('Y-m-d H:i:s');
+
+	$sql = "UPDATE worklog SET finish = ?, finished = 1 WHERE finished = 0 and id_user = ? ORDER BY id DESC LIMIT 1";
+	if($stmt = mysqli_prepare($link, $sql))
+	{
+		// Bind variables to the prepared statement as parameters
+		mysqli_stmt_bind_param($stmt, "si", $datetemp, $_SESSION['id'] );
+
+		// Attempt to execute the prepared statement
+		if(mysqli_stmt_execute($stmt))
+		{
+			echo "";
+		} else{
+			echo "Oops! Something went wrong. Please try again later.";
+		}
+
+		// Close statement
+		mysqli_stmt_close($stmt);
+	}
+	else {
+		echo "";
+	}
+}
 ?>
 
 <html>
@@ -41,6 +102,7 @@ echo $_SESSION["username"];
 				<input type="submit" name="startWork" value="start" />
 			</form>
 		<?php endif; ?>
+			<br>
 			<?php
 			$sql = "SELECT id, start, finish FROM worklog WHERE id_user = ?";
 
@@ -63,8 +125,11 @@ echo $_SESSION["username"];
 							echo "<tr>";
 							echo "<td>".$id."</td>";
 							echo "<td>coisando coisas</td>";
-							echo "<td>".$start."</td>";
-							echo "<td>".$finish."</td>";
+							echo "<td>".date('d-m-Y H:i', strtotime($start))."</td>";
+							if ($start == $finish)
+								echo "<td>ONGOING</td>";
+							else
+								echo "<td>".date('d-m-Y H:i', strtotime($finish))."</td>";
 							$datetime1 = strtotime($start);
 							$datetime2 = strtotime($finish);
 							$secs = $datetime2 - $datetime1;// == <seconds between the two times>
@@ -72,10 +137,6 @@ echo $_SESSION["username"];
 							echo "<td>".round($minutes)."</td>";
 							echo "</tr>";
 						}
-					}
-					else
-					{
-						echo"1";
 					}
 				} else{
 					echo "Oops! Something went wrong. Please try again later.";
@@ -89,47 +150,6 @@ echo $_SESSION["username"];
 	</body>
 </html>
 <?php
-    if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="start")
-    {
-        $sql = "INSERT INTO worklog (id_user,start, finish) VALUES (?, ?, ?)";
 
-        if($stmt = mysqli_prepare($link, $sql))
-		{
-			$datetemp = date('Y-m-d H:i:s');
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "iss", $_SESSION["id"],$datetemp, $datetemp);
-
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt))
-			{
-                echo"contanto";
-            } else{
-                echo "Something went wrong. Please try again later.";
-            }
-            // Close statement
-            mysqli_stmt_close($stmt);
-        }
-    }
-	if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
-    {
-		$datetemp = date('Y-m-d H:i:s');
-
-        $sql = "UPDATE worklog SET finish = ?, finished = 1 WHERE finished = 0 ORDER BY id DESC LIMIT 1";
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $datetemp);
-
-
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                echo "começar";
-            } else{
-                echo "Oops! Something went wrong. Please try again later.";
-            }
-
-            // Close statement
-            mysqli_stmt_close($stmt);
-        }
-    }
 
 ?>
