@@ -2,7 +2,6 @@
 // Initialize the session
 session_start();
 require_once "config.php";
-
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true)
 {
@@ -51,11 +50,11 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 {
 	$datetemp = date('Y-m-d H:i:s');
 
-	$sql = "UPDATE worklog SET finish = ?, finished = 1 WHERE finished = 0 and id_user = ? ORDER BY id DESC LIMIT 1";
+	$sql = "UPDATE worklog SET finish = ?, finished = 1, description = ? WHERE finished = 0 and id_user = ? ORDER BY id DESC LIMIT 1";
 	if($stmt = mysqli_prepare($link, $sql))
 	{
 		// Bind variables to the prepared statement as parameters
-		mysqli_stmt_bind_param($stmt, "si", $datetemp, $_SESSION['id'] );
+		mysqli_stmt_bind_param($stmt, "ssi", $datetemp,$_POST['description'], $_SESSION['id'] );
 
 		// Attempt to execute the prepared statement
 		if(mysqli_stmt_execute($stmt))
@@ -86,28 +85,28 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 	</head>
 	<body>
 
-		<table class = "table">
-		<thead>
-		<tr>
-			<th scope="col">#</th>
-			<th scope="col">descrição</th>
-			<th scope="col">inicio</th>
-			<th scope="col">fim</th>
-			<th scope="col">tempo total</th>
-		</tr>
-		</thead>
+
 		<?php if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="start") :?>
 			<form action="index.php" method="post">
 				<input type="submit" name="startWork" value="stop" />
-			</form>
+
 		<?php else : ?>
 			<form action="index.php" method="post">
 				<input type="submit" name="startWork" value="start" />
-			</form>
 		<?php endif; ?>
 			<br>
+			<table class = "table">
+			<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">descrição</th>
+				<th scope="col">inicio</th>
+				<th scope="col">fim</th>
+				<th scope="col">tempo total</th>
+			</tr>
+			</thead>
 			<?php
-			$sql = "SELECT id, start, finish FROM worklog WHERE id_user = ?";
+			$sql = "SELECT id, description, start, finish FROM worklog WHERE id_user = ?";
 
 			if($stmt = mysqli_prepare($link, $sql)){
 				// Bind variables to the prepared statement as parameters
@@ -122,17 +121,27 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 					// Check if username exists, if yes then verify password
 					if(mysqli_stmt_num_rows($stmt) >= 1)
 					{
-						mysqli_stmt_bind_result($stmt, $id, $start, $finish);
+						$i=0;
+						mysqli_stmt_bind_result($stmt, $id,$description, $start, $finish);
 						while (mysqli_stmt_fetch($stmt))
 						{
+							$i++;
 							echo "<tr>";
 							echo "<th scope='row'>".$id."</th>";
-							echo "<td>coisando coisas</td>";
+							if ($_POST['startWork']=="start" && $i == mysqli_stmt_num_rows($stmt))
+								echo "<td><input type='text' name='description' value='$description'></td>";
+							else
+								echo "<td>$description</td>";
 							echo "<td>".date('d-m-Y H:i', strtotime($start))."</td>";
 							if ($start == $finish)
+							{
 								echo "<td>ONGOING</td>";
+							}
 							else
+							{
 								echo "<td>".date('d-m-Y H:i', strtotime($finish))."</td>";
+							}
+
 							$datetime1 = strtotime($start);
 							$datetime2 = strtotime($finish);
 							$secs = $datetime2 - $datetime1;// == <seconds between the two times>
@@ -150,9 +159,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 			}
  			?>
 		</table>
+		</form>
 	</body>
 </html>
 <?php
-
-
 ?>
