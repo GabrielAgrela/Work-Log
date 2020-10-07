@@ -79,7 +79,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 	<head>
 		<meta charset="UTF-8">
 		<title>workLogs</title>
-		<link rel="icon" href="https://i.imgur.com/UDAqk7t.png">
+		<link rel="icon" type="image/png" href="https://i.imgur.com/UDAqk7t.png" />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
 		<style type="text/css">
 		body{ font: 14px sans-serif; }
