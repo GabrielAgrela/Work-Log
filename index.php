@@ -40,7 +40,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="start")
 					{
 						echo "";
 					} else{
-						echo "Something went wrong. Please try again later.2";
+						echo "Something went wrong. sorry";
 					}
 					mysqli_stmt_close($stmt);
 				}
