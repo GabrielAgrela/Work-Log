@@ -14,7 +14,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true)
 $totalMinutes=0;
 
 //welcome user
-echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"].".!</h1>";
+echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 
 // if button/form start pressed check if there is unfinished worklogs in this user, if so, don't do anything, if there isn't insert new worklog with temporary "finish" parameter
 if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="start")
