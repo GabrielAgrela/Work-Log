@@ -34,6 +34,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="start")
 				if($stmt = mysqli_prepare($link, $sql))
 				{
 					$datetemp = date('Y-m-d H:i:s');
+					echo "sozo ".$datetemp;
 					//inserting "finish" parameter as a temporary (updated when user finishes this worklog)
 					mysqli_stmt_bind_param($stmt, "iss", $_SESSION["id"],$datetemp, $datetemp);
 					if(mysqli_stmt_execute($stmt))
