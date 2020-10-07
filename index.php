@@ -30,7 +30,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="start")
 			//if there is no unfinished worklogs, insert a new one
 			if(mysqli_stmt_num_rows($stmt) == 0)
 			{
-				$sql = "INSERT INTO worklog (id_user,description, start, finish) VALUES ("",?, ?, ?)";
+				$sql = "INSERT INTO worklog (id_user,start, finish) VALUES (?, ?, ?)";
 				if($stmt = mysqli_prepare($link, $sql))
 				{
 					$datetemp = date('Y-m-d H:i:s');
