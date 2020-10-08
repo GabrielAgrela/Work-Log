@@ -87,6 +87,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 	    </style>
 	</head>
 	<body>
+		<form action="logout.php">
+		    <input class="btn btn-danger" type="submit" value="LogOut" />
+		</form>
 		<!-- if button/form previously pressed was "start" then change to "stop"-->
 		<?php if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="start") :?>
 			<form action="index.php" method="post">
