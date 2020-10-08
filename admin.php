@@ -25,9 +25,9 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 		<title>Index</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
 		<style type="text/css">
-		body{ font: 14px sans-serif; }
-		.wrapper{ width: 350px; padding: 20px; }
-		</style>
+	        body{ font: 18px sans-serif;!important position: relative; padding: 5%; }
+	        .wrapper{ width: 350px; padding: 20px; }
+	    </style>
 	</head>
 	<body>
 		<br>
@@ -35,6 +35,7 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 			<thead>
 				<tr>
 					<th scope="col">#</th>
+					<th scope="col">username</th>
 					<th scope="col">descrição</th>
 					<th scope="col">inicio</th>
 					<th scope="col">fim</th>
@@ -43,7 +44,7 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 			</thead>
 		<?php
 			//select worklog data from this user
-			$sql = "SELECT id, description, start, finish FROM worklog";
+			$sql = "SELECT id,id_user, description, start, finish FROM worklog ORDER BY id_user";
 			//for each row of data in worklog table, write a row in the html table
 			if($stmt = mysqli_prepare($link, $sql))
 			{
@@ -53,12 +54,27 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 					if(mysqli_stmt_num_rows($stmt) >= 1)
 					{
 						$i=0;//checker to see if number of current itteration == last table row
-						mysqli_stmt_bind_result($stmt, $id,$description, $start, $finish);
+						mysqli_stmt_bind_result($stmt, $id, $id_user, $description, $start, $finish);
 						while (mysqli_stmt_fetch($stmt))
 						{
 							$i++;
 							echo "<tr>";
 							echo "<th scope='row'>".$id."</th>";
+
+							//query to get the username from the FK in the worklog
+							$sql = "SELECT username FROM users where id = ?";
+							if($stmtName = mysqli_prepare($link, $sql))
+							{
+								mysqli_stmt_bind_param($stmtName, "i", $id_user);
+								if(mysqli_stmt_execute($stmtName))
+								{
+									mysqli_stmt_store_result($stmtName);
+									mysqli_stmt_bind_result($stmtName, $username);
+									while (mysqli_stmt_fetch($stmtName))
+										echo "<td scope='row'>".$username."</td>";
+								}
+							}
+
 							echo "<td>$description</td>";
 							echo "<td>".date('d-m-Y H:i', strtotime($start))."</td>";
 
@@ -76,6 +92,7 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 							echo "<td>".round($minutes)." m</td>";
 							$totalMinutes=$totalMinutes + round($minutes);
 							echo "</tr>";
+
 						}
 					}
 				}

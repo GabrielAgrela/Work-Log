@@ -82,9 +82,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 		<link rel="icon" type="image/png" href="https://i.imgur.com/UDAqk7t.png" />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
 		<style type="text/css">
-		body{ font: 14px sans-serif; }
-		.wrapper{ width: 350px; padding: 20px; }
-		</style>
+	         body{ font: 18px sans-serif;!important position: relative; padding: 5%; }
+	        .wrapper{ width: 350px; padding: 20px; }
+	    </style>
 	</head>
 	<body>
 		<!-- if button/form previously pressed was "start" then change to "stop"-->
