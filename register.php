@@ -80,7 +80,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 // Redirect to login page
                 header("location: login.php");
             } else{
-                echo "Something went wrong. Please try again later.";
+                echo "Something went wrong. Please try again later.".mysqli_stmt_error($stmt);
             }
 
             // Close statement
@@ -99,37 +99,49 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <meta charset="UTF-8">
     <title>Sign Up</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style type="text/css">
-        body{ font: 14px sans-serif; }
+        body{ font: 18px sans-serif;!important position: relative; top: 50%; transform: translateY(	50%) }
         .wrapper{ width: 350px; padding: 20px; }
     </style>
 </head>
 <body>
-    <div class="wrapper">
-        <h2>Sign Up</h2>
-        <p>Please fill this form to create an account.</p>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
-                <label>Username</label>
-                <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">
-                <span class="help-block"><?php echo $username_err; ?></span>
+    <div id="login">
+        <h3 class="text-center text-white pt-5">Login form</h3>
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                        <h1 class="text-center text-info" style="margin-bottom:4%;">Sign Up</h1>
+				        <p>Please fill this form to create an account.</p>
+				        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+				            <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
+				                <label>Username</label>
+				                <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">
+				                <span class="help-block"><?php echo $username_err; ?></span>
+				            </div>
+				            <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
+				                <label>Password</label>
+				                <input type="password" name="password" class="form-control" value="<?php echo $password; ?>">
+				                <span class="help-block"><?php echo $password_err; ?></span>
+				            </div>
+				            <div class="form-group <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
+				                <label>Confirm Password</label>
+				                <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
+				                <span class="help-block"><?php echo $confirm_password_err; ?></span>
+				            </div>
+				            <div class="form-group">
+				                <input type="submit" class="btn btn-primary" value="Submit">
+				                <input type="reset" class="btn btn-default" value="Reset">
+				            </div>
+				            <p>Already have an account? <a href="login.php">Login here</a>.</p>
+				        </form>
+                    </div>
+                </div>
             </div>
-            <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control" value="<?php echo $password; ?>">
-                <span class="help-block"><?php echo $password_err; ?></span>
-            </div>
-            <div class="form-group <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
-                <label>Confirm Password</label>
-                <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
-                <span class="help-block"><?php echo $confirm_password_err; ?></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Submit">
-                <input type="reset" class="btn btn-default" value="Reset">
-            </div>
-            <p>Already have an account? <a href="login.php">Login here</a>.</p>
-        </form>
+        </div>
     </div>
 </body>
 </html>

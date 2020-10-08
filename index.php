@@ -90,11 +90,11 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 		<!-- if button/form previously pressed was "start" then change to "stop"-->
 		<?php if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="start") :?>
 			<form action="index.php" method="post">
-				<input type="submit" name="startWork" value="stop" />
+				<input class="btn btn-primary" type="submit" name="startWork" value="stop" />
 		<!-- if button/form previously pressed was "stop" then change to "start"-->
 		<?php else : ?>
 			<form action="index.php" method="post">
-				<input type="submit" name="startWork" value="start" />
+				<input class="btn btn-primary" type="submit" name="startWork" value="start" />
 		<?php endif; ?>
 
 			<br>
