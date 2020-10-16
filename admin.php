@@ -34,18 +34,8 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 		    <input class="btn btn-danger" type="submit" value="LogOut" />
 		</form>
 		<br>
-		<table class = "table">
-			<thead>
-				<tr>
-					<th scope="col">#</th>
-					<th scope="col">username</th>
-					<th scope="col">descrição</th>
-					<th scope="col">inicio</th>
-					<th scope="col">fim</th>
-					<th scope="col">tempo total</th>
-				</tr>
-			</thead>
 		<?php
+
 			//select worklog data from this user
 			$sql = "SELECT id,id_user, description, start, finish FROM worklog ORDER BY id_user";
 			//for each row of data in worklog table, write a row in the html table
@@ -56,11 +46,55 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 					mysqli_stmt_store_result($stmt);
 					if(mysqli_stmt_num_rows($stmt) >= 1)
 					{
-						$i=0;//checker to see if number of current itteration == last table row
+
+					}
+				}
+			}
+			//select worklog data from this user
+			$sql = "SELECT id,id_user, description, start, finish FROM worklog ORDER BY id_user";
+			//for each row of data in worklog table, write a row in the html table
+			if($stmt = mysqli_prepare($link, $sql))
+			{
+				if(mysqli_stmt_execute($stmt))
+				{
+					mysqli_stmt_store_result($stmt);
+					if(mysqli_stmt_num_rows($stmt) >= 1)
+					{
+						$i=0;//number of total rows
+						$lastRowId_user=-1;
+						$endTable=0;
 						mysqli_stmt_bind_result($stmt, $id, $id_user, $description, $start, $finish);
 						while (mysqli_stmt_fetch($stmt))
 						{
 							$i++;
+							//if last row id_user is different from this row's id_user then start a new table
+							if($lastRowId_user!=$id_user)
+							{
+								//at the beggining of each row (except the first), close the table and print total work
+								if($i!=1)
+								{
+									?>
+										</table>
+										<h2 style="text-align:right; margin-right:2%; margin-bottom:2%;"><?php echo $username;?>'s Total work: <?php echo $totalMinutes." m (".round($totalMinutes/60)." h)";?></h2>
+									<?php
+								}
+								$totalMinutes=0;
+								?>
+								<table class = "table">
+									<thead>
+										<tr>
+											<th scope="col" style="width: 5%">#</th>
+											<th scope="col" style="width: 5%">username</th>
+											<th scope="col" style="width: 60%">descrição</th>
+											<th scope="col"style="width: 12.5%">inicio</th>
+											<th scope="col"style="width: 12.5%">fim</th>
+											<th scope="col"style="width: 5%">tempo total</th>
+										</tr>
+									</thead>
+								<?php
+							}
+							$lastRowId_user=$id_user;
+
 							echo "<tr>";
 							echo "<th scope='row'>".$id."</th>";
 
@@ -95,7 +129,10 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 							echo "<td>".round($minutes)." m</td>";
 							$totalMinutes=$totalMinutes + round($minutes);
 							echo "</tr>";
+							if($endTable==1)
+							{
 
+							}
 						}
 					}
 				}
@@ -106,8 +143,9 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 					mysqli_stmt_close($stmt);
 			}
 			?>
+		<!-- close last table and print total work!-->
 		</table>
-		<h2 style="text-align:right; margin-right:2%; margin-bottom:2%;">Total work: <?php echo $totalMinutes." m (".round($totalMinutes/60)." h)";?></h2>
+		<h2 style="text-align:right; margin-right:2%; margin-bottom:2%;"><?php echo $username;?>'s Total work: <?php echo $totalMinutes." m (".round($totalMinutes/60)." h)";?></h2>
 	</body>
 </html>
 <?php
