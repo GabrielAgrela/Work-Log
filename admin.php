@@ -27,6 +27,7 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 		<style type="text/css">
 	        body{ font: 18px sans-serif;!important position: relative; padding: 5%; }
 	        .wrapper{ width: 350px; padding: 20px; }
+			table {table-layout: fixed; word-wrap: break-word;}
 	    </style>
 	</head>
 	<body>
@@ -83,9 +84,9 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 								<table class = "table">
 									<thead>
 										<tr>
-											<th scope="col" style="width: 5%">#</th>
-											<th scope="col" style="width: 5%">username</th>
-											<th scope="col" style="width: 60%">descrição</th>
+											<th scope="col" style="width: 3%">#</th>
+											<th scope="col" style="width: 8%">username</th>
+											<th scope="col" style="width: 59%">descrição</th>
 											<th scope="col"style="width: 12.5%">inicio</th>
 											<th scope="col"style="width: 12.5%">fim</th>
 											<th scope="col"style="width: 5%">tempo total</th>

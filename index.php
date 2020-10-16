@@ -84,6 +84,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 		<style type="text/css">
 	         body{ font: 18px sans-serif;!important position: relative; padding: 5%; }
 	        .wrapper{ width: 350px; padding: 20px; }
+			table {table-layout: fixed; word-wrap: break-word;}
 	    </style>
 	</head>
 	<body>
@@ -104,11 +105,11 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 			<table class = "table">
 				<thead>
 					<tr>
-						<th scope="col">#</th>
-						<th scope="col">descrição</th>
-						<th scope="col">inicio</th>
-						<th scope="col">fim</th>
-						<th scope="col">tempo total</th>
+						<th scope="col" style="width: 10%">#</th>
+						<th scope="col" style="width: 40%">descrição</th>
+						<th scope="col" style="width: 20%">inicio</th>
+						<th scope="col" style="width: 20%">fim</th>
+						<th scope="col" style="width: 10%">tempo total</th>
 					</tr>
 				</thead>
 		<?php
