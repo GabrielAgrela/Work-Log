@@ -156,7 +156,7 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 		<!-- close last table and print total work!-->
 			<tr>
 		      <td colspan="5"></td>
-		      <td><h3 style="word-wrap: break-word;"><?php echo $totalMinutes." m (".round($totalMinutes/60)." h)";?></h3></td>
+		      <td><h3 style="word-wrap: break-word !important;"><?php echo $totalMinutes." m (".round($totalMinutes/60)." h)";?></h3></td>
 		    </tr>
 			</table>
 		</div>
