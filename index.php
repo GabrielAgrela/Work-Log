@@ -80,12 +80,14 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 		<meta charset="UTF-8">
 		<title>workLogs</title>
 		<link rel="icon" type="image/png" href="https://i.imgur.com/UDAqk7t.png" />
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
 		<style type="text/css">
 	         body{ font: 18px sans-serif;!important position: relative; padding: 5%; }
 	        .wrapper{ width: 350px; padding: 20px; }
-			table {table-layout: fixed; word-wrap: break-word;}
 	    </style>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	</head>
 	<body>
 		<form action="logout.php">
@@ -102,16 +104,17 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 		<?php endif; ?>
 
 			<br>
-			<table class = "table">
-				<thead>
-					<tr>
-						<th scope="col" style="width: 10%">#</th>
-						<th scope="col" style="width: 40%">descrição</th>
-						<th scope="col" style="width: 20%">inicio</th>
-						<th scope="col" style="width: 20%">fim</th>
-						<th scope="col" style="width: 10%">tempo total</th>
-					</tr>
-				</thead>
+			<div class="table-responsive">
+				<table class = "table">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col" >descrição</th>
+							<th scope="col" >inicio</th>
+							<th scope="col" >fim</th>
+							<th scope="col" >tempo total</th>
+						</tr>
+					</thead>
 		<?php
 			//select worklog data from this user
 			$sql = "SELECT id, description, start, finish FROM worklog WHERE id_user = ?";
@@ -164,7 +167,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 					mysqli_stmt_close($stmt);
 			}
 			?>
-		</table>
+			</table>
+		</div>
 		</form>
 		<h2 style="text-align:right; margin-right:2%; margin-bottom:2%;">Total work: <?php echo $totalMinutes." m (".round($totalMinutes/60)." h)";?></h2>
 	</body>

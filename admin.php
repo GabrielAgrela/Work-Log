@@ -22,13 +22,15 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Index</title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+		<title>Admin</title>
 		<style type="text/css">
 	        body{ font: 18px sans-serif;!important position: relative; padding: 5%; }
 	        .wrapper{ width: 350px; padding: 20px; }
-			table {table-layout: fixed; word-wrap: break-word;}
 	    </style>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	</head>
 	<body>
 		<form action="logout.php">
@@ -75,23 +77,25 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 								if($i!=1)
 								{
 									?>
-										</table>
+											</table>
+										</div>
 										<h2 style="text-align:right; margin-right:2%; margin-bottom:2%;"><?php echo $username;?>'s Total work: <?php echo $totalMinutes." m (".round($totalMinutes/60)." h)";?></h2>
 									<?php
 								}
 								$totalMinutes=0;
 								?>
-								<table class = "table">
-									<thead>
-										<tr>
-											<th scope="col" style="width: 3%">#</th>
-											<th scope="col" style="width: 8%">username</th>
-											<th scope="col" style="width: 59%">descrição</th>
-											<th scope="col"style="width: 12.5%">inicio</th>
-											<th scope="col"style="width: 12.5%">fim</th>
-											<th scope="col"style="width: 5%">tempo total</th>
-										</tr>
-									</thead>
+								<div class="table-responsive">
+									<table class = "table">
+										<thead>
+											<tr>
+												<th scope="col" style="width: 3%">#</th>
+												<th scope="col" style="width: 8%">username</th>
+												<th scope="col" style="width: 59%">descrição</th>
+												<th scope="col"style="width: 12.5%">inicio</th>
+												<th scope="col"style="width: 12.5%">fim</th>
+												<th scope="col"style="width: 5%">tempo total</th>
+											</tr>
+										</thead>
 								<?php
 							}
 							$lastRowId_user=$id_user;
@@ -145,7 +149,8 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 			}
 			?>
 		<!-- close last table and print total work!-->
-		</table>
+			</table>
+		</div>
 		<h2 style="text-align:right; margin-right:2%; margin-bottom:2%;"><?php echo $username;?>'s Total work: <?php echo $totalMinutes." m (".round($totalMinutes/60)." h)";?></h2>
 	</body>
 </html>
