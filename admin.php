@@ -81,7 +81,7 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 									?>
 											<tr>
 										      <td colspan="5"></td>
-										      <td><h3><?php echo $totalMinutes." m (".round($totalMinutes/60)." h)";?></h3></td>
+										      <td><?php echo round($totalMinutes/60)." h e ". $restMinutes." m";?></td>
 										    </tr>
 											</table>
 										</div>
@@ -138,6 +138,7 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 							$minutes = $secs / 60;
 							echo "<td>".round($minutes)." m</td>";
 							$totalMinutes=$totalMinutes + round($minutes);
+							$restMinutes=$totalMinutes - round($totalMinutes/60)*60;
 							echo "</tr>";
 							if($endTable==1)
 							{
@@ -156,7 +157,7 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 		<!-- close last table and print total work!-->
 			<tr>
 		      <td colspan="5"></td>
-		      <td><?php echo $totalMinutes." m (".round($totalMinutes/60)." h)";?></td>
+		      <td><?php echo round($totalMinutes/60)." h e ". $restMinutes." m";?></td>
 		    </tr>
 			</table>
 		</div>
@@ -164,3 +165,4 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 </html>
 <?php
 ?>
+$restMinutes

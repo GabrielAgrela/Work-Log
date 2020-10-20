@@ -159,6 +159,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 							echo "<td>".round($minutes)." m</td>";
 
 							$totalMinutes=$totalMinutes + round($minutes);
+							$restMinutes=$totalMinutes - round($totalMinutes/60)*60;
 							echo "</tr>";
 						}
 					}
@@ -172,7 +173,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 			?>
 			<tr>
 		      <td colspan="4"></td>
-		      <td><h3><?php echo $totalMinutes." m (".round($totalMinutes/60)." h)";?></h3></td>
+		      <td><?php echo round($totalMinutes/60)." h e ". $restMinutes." m";?></td>
 		    </tr>
 			</table>
 		</div>
