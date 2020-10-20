@@ -81,13 +81,15 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 		<title>workLogs</title>
 		<link rel="icon" type="image/png" href="https://i.imgur.com/UDAqk7t.png" />
 		<style type="text/css">
-	         body{ font: 18px sans-serif;!important position: relative; padding: 5%; }
+			table {margin-top: 2% !important;}
+	        body{color: #f0f0f0 !important; background-color: #2a2a2a !important; font: 18px sans-serif;!important position: relative; padding: 5%; }
 	        .wrapper{ width: 350px; padding: 20px; }
 	    </style>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	</head>
 	<body>
 		<form action="logout.php">
@@ -105,7 +107,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 
 			<br>
 			<div class="table-responsive">
-				<table class = "table">
+				<table class = "table table-striped table-dark table-hover">
 					<thead>
 						<tr>
 							<th scope="col">#</th>
@@ -155,6 +157,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 							$secs = $datetime2 - $datetime1;
 							$minutes = $secs / 60;
 							echo "<td>".round($minutes)." m</td>";
+
 							$totalMinutes=$totalMinutes + round($minutes);
 							echo "</tr>";
 						}
@@ -167,10 +170,13 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 					mysqli_stmt_close($stmt);
 			}
 			?>
+			<tr>
+		      <td colspan="4"></td>
+		      <td><h3><?php echo $totalMinutes." m (".round($totalMinutes/60)." h)";?></h3></td>
+		    </tr>
 			</table>
 		</div>
 		</form>
-		<h2 style="text-align:right; margin-right:2%; margin-bottom:2%;">Total work: <?php echo $totalMinutes." m (".round($totalMinutes/60)." h)";?></h2>
 	</body>
 </html>
 <?php
