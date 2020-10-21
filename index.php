@@ -79,7 +79,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 	<head>
 		<meta charset="UTF-8">
 		<title>workLogs</title>
-		<link rel="icon" type="image/png" href="https://i.imgur.com/UDAqk7t.png" />
 		<style type="text/css">
 			table {margin-top: 2% !important;}
 	        body{color: #f0f0f0 !important; background-color: #2a2a2a !important; font: 18px sans-serif;!important position: relative; padding: 5%; }
