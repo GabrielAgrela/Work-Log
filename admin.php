@@ -40,23 +40,8 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 		</form>
 		<br>
 		<?php
-
 			//select worklog data from this user
-			$sql = "SELECT id,id_user, description, start, finish FROM worklog ORDER BY id_user";
-			//for each row of data in worklog table, write a row in the html table
-			if($stmt = mysqli_prepare($link, $sql))
-			{
-				if(mysqli_stmt_execute($stmt))
-				{
-					mysqli_stmt_store_result($stmt);
-					if(mysqli_stmt_num_rows($stmt) >= 1)
-					{
-
-					}
-				}
-			}
-			//select worklog data from this user
-			$sql = "SELECT id,id_user, description, start, finish FROM worklog ORDER BY id_user";
+			$sql = "SELECT id,id_user, description, start, finish FROM worklog ORDER BY id_user,id";
 			//for each row of data in worklog table, write a row in the html table
 			if($stmt = mysqli_prepare($link, $sql))
 			{
