@@ -158,10 +158,10 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 							$datetime2 = strtotime($finish);
 							$secs = $datetime2 - $datetime1;
 							$minutes = $secs / 60;
-							echo "<td>".round($minutes)." m</td>";
+							echo "<td>".floor($minutes)." m</td>";
 
-							$totalMinutes=$totalMinutes + round($minutes);
-							$restMinutes=$totalMinutes - round($totalMinutes/60)*60;
+							$totalMinutes=$totalMinutes + floor($minutes);
+							$restMinutes=$totalMinutes - floor($totalMinutes/60)*60;
 							echo "</tr>";
 						}
 					}
@@ -175,7 +175,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 			?>
 			<tr>
 		      <td colspan="4"></td>
-		      <td><?php echo round($totalMinutes/60)." h e ". $restMinutes." m";?></td>
+		      <td><?php echo floor($totalMinutes/60)." h e ". $restMinutes." m";?></td>
 		    </tr>
 			</table>
 		</div>
