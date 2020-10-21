@@ -165,4 +165,3 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 </html>
 <?php
 ?>
-$restMinutes
