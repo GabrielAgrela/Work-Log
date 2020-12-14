@@ -1,4 +1,9 @@
 <?php
+
+$lifetime = strtotime('+240 minutes', 0);
+
+session_set_cookie_params($lifetime);
+
 // Initialize the session
 session_start();
 
