@@ -70,6 +70,7 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 										      <td><?php echo floor($totalMinutes/60)." h e ". $restMinutes." m";?></td>
 										    </tr>
 											</table>
+											<span>Salario mínimo anual na madeira: 9 109,38 / 253 dias úteis / 8 horas diárias * <?php echo floor($totalMinutes/60);?> horas = <?php echo 9109.38/253/8*floor($totalMinutes/60);?></span>
 										</div>
 									<?php
 								}
@@ -126,6 +127,7 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 							$totalMinutes=$totalMinutes + floor($minutes);
 							$restMinutes=$totalMinutes - floor($totalMinutes/60)*60;
 							echo "</tr>";
+
 							if($endTable==1)
 							{
 
