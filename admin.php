@@ -67,7 +67,7 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 									?>
 											<tr>
 										      <td colspan="5"></td>
-										      <td><?php echo floor($totalMinutes/60)." h e ". $restMinutes." m";?><span>Salario mínimo anual na madeira: 9 109,38 / 253 dias úteis / 8 horas diárias * <?php echo floor($totalMinutes/60);?> horas = <?php echo 9109.38/253/8*floor($totalMinutes/60);?></span></td>
+										      <td><?php echo floor($totalMinutes/60)." h e ". $restMinutes." m";?><hr><span>Salario mínimo anual na madeira: 9 109,38 / 253 dias úteis / 8 horas diárias * <?php echo floor($totalMinutes/60);?> horas = <?php echo floor(9109.38/253/8*floor($totalMinutes/60));?>€</span></td>
 
 										    </tr>
 											</table>
@@ -146,7 +146,7 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 		<!-- close last table and print total work!-->
 			<tr>
 		      <td colspan="5"></td>
-		      <td><?php echo floor($totalMinutes/60)." h e ". $restMinutes." m";?><hr><span>Salario mínimo anual na madeira: 9 109,38 / 253 dias úteis / 8 horas diárias * <?php echo floor($totalMinutes/60);?> horas = <?php echo 9109.38/253/8*floor($totalMinutes/60);?></span></td>
+		      <td><?php echo floor($totalMinutes/60)." h e ". $restMinutes." m";?><hr><span>Salario mínimo anual na madeira: 9 109,38 / 253 dias úteis / 8 horas diárias * <?php echo floor($totalMinutes/60);?> horas = <?php echo floor(9109.38/253/8*floor($totalMinutes/60));?>€</span></td>
 		    </tr>
 			</table>
 		</div>
