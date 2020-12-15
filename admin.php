@@ -71,7 +71,7 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 												<?php echo floor($totalMinutes/60)." h e ". $restMinutes." m";?>
 												<hr>
 													<span>
-														<a href="https://meusalario.pt/salario/salariominimo">9 109,38€ de salário mínimo anual na madeira de 2020</a>: /
+														<a href="https://meusalario.pt/salario/salariominimo">9 109,38€ de salário mínimo anual na madeira de 2020</a> /
 														<a href="https://www.dias-uteis.pt/dias-uteis_feriados_2020.htm">253 dias úteis</a>
  														/ 8 horas diárias * <?php echo floor($totalMinutes/60);?> horas = <?php echo round(9109.38/253/8*floor($totalMinutes/60));?>€
 													</span>
