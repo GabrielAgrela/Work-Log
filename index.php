@@ -112,11 +112,11 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 				<table class = "table table-striped table-dark table-hover">
 					<thead>
 						<tr>
-							<th scope="col">#</th>
-							<th scope="col" >descrição</th>
-							<th scope="col" >inicio</th>
-							<th scope="col" >fim</th>
-							<th scope="col" >tempo total</th>
+							<th scope="col" style="width: 3%">#</th>
+							<th scope="col" style="width: 54%">descrição</th>
+							<th scope="col"style="width: 12.5%">inicio</th>
+							<th scope="col"style="width: 12.5%">fim</th>
+							<th scope="col"style="width: 18%">tempo total</th>
 						</tr>
 					</thead>
 		<?php
