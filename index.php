@@ -192,9 +192,19 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 		</div>
 		</form>
 	</body>
-<script>
-	document.getElementsByClassName("paid").disabled = true;
-</script>
+	<script>
+		for (var i = 0;; i++)
+		{
+			try
+			{
+				document.getElementsByClassName("paid")[i].disabled = true;
+			}
+			catch (e)
+			{
+				break;
+			}
+		}
+	</script>
 </html>
 <?php
 ?>
