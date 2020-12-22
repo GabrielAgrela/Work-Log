@@ -161,10 +161,14 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 							$minutes = $secs / 60;
 							echo "<td>".floor($minutes)." m</td>";
 							if ($paid == 0)
-								echo "<input type='checkbox' id='paid'>";
+								echo "<td><input type='checkbox' id='paid'></td>";
 							else
-								echo "<input type='checkbox' id='paid' checked>";
-
+								echo "<td><input type='checkbox' id='paid' checked></td>";
+							?>
+								<script>
+									document.getElementById("paid").disabled = true;
+								</script>
+							<?php
 							$totalMinutes=$totalMinutes + floor($minutes);
 							$restMinutes=$totalMinutes - floor($totalMinutes/60)*60;
 							echo "</tr>";
@@ -193,9 +197,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 		</div>
 		</form>
 	</body>
-	<script>
-  		document.getElementById("paid").disabled = true;
-	</script>
 </html>
 <?php
 ?>
