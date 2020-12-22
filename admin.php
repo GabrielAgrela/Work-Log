@@ -33,6 +33,7 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	</head>
 	<body>
@@ -42,7 +43,7 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 		<br>
 		<?php
 			//select worklog data from this user
-			$sql = "SELECT id,id_user, description, start, finish FROM worklog ORDER BY id_user,id";
+			$sql = "SELECT id,id_user, description, start, finish, paid FROM worklog ORDER BY id_user,id";
 			//for each row of data in worklog table, write a row in the html table
 			if($stmt = mysqli_prepare($link, $sql))
 			{
@@ -54,7 +55,7 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 						$i=0;//number of total rows
 						$lastRowId_user=-1;
 						$endTable=0;
-						mysqli_stmt_bind_result($stmt, $id, $id_user, $description, $start, $finish);
+						mysqli_stmt_bind_result($stmt, $id, $id_user, $description, $start, $finish, $paid);
 						while (mysqli_stmt_fetch($stmt))
 						{
 							$i++;
@@ -67,7 +68,7 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 									?>
 											<tr>
 										      <td colspan="5"></td>
-										      <td>
+										      <td colspan="2">
 												<?php echo floor($totalMinutes/60)." h e ". $restMinutes." m";?>
 												<hr>
 													<span>
@@ -91,10 +92,11 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 											<tr>
 												<th scope="col" style="width: 3%">#</th>
 												<th scope="col" style="width: 8%">username</th>
-												<th scope="col" style="width: 54%">descrição</th>
+												<th scope="col" style="width: 52%">descrição</th>
 												<th scope="col"style="width: 12.5%">inicio</th>
 												<th scope="col"style="width: 12.5%">fim</th>
 												<th scope="col"style="width: 10%">tempo total</th>
+												<th scope="col"style="width: 2%">paid</th>
 											</tr>
 										</thead>
 								<?php
@@ -133,6 +135,11 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 							$secs = $datetime2 - $datetime1;
 							$minutes = $secs / 60;
 							echo "<td>".floor($minutes)." m</td>";
+							if ($paid == 0)
+								echo "<td><i class='fa fa-close' style='font-size:24px;color:red'></td>";
+							else
+								echo "<td><i class='fa fa-check' style='font-size:24px;color:green'></i></td>";
+
 							$totalMinutes=$totalMinutes + floor($minutes);
 							$restMinutes=$totalMinutes - floor($totalMinutes/60)*60;
 							echo "</tr>";
@@ -154,7 +161,7 @@ echo "<h1 style='margin-bottom: 1%'>Olá, ".$_SESSION["username"]."!</h1>";
 		<!-- close last table and print total work!-->
 			<tr>
 		      <td colspan="5"></td>
-		      <td><?php echo floor($totalMinutes/60)." h e ". $restMinutes." m";?><hr>
+		      <td colspan="2"><?php echo floor($totalMinutes/60)." h e ". $restMinutes." m";?><hr>
 				  <span>
 					  <a href="http://meusalario.pt/salario/salariominimo">9 109,38€ de salário mínimo anual na madeira de 2020</a> /
 					  <a href="https://www.dias-uteis.pt/dias-uteis_feriados_2020.htm">253 dias úteis</a>
