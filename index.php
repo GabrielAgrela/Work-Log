@@ -85,15 +85,17 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 	        .wrapper{ width: 350px; padding: 20px; }
 	    </style>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="icon" type="image/png" href="media\favicon.png?">
 		<link rel="shortcut icon" type="image/png" href="media\favicon.png?">
 	</head>
 	<body>
+
 		<form action="logout.php">
 		    <input class="btn btn-danger" type="submit" value="LogOut" />
 		</form>
@@ -155,17 +157,24 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 								echo "<td>".date('d-m-Y H:i', strtotime($finish))."</td>";//formating datetime to remove seconds
 
 							//operations to get the time difference between finish worklog and start worklog in minutes (work time)
+
 							$datetime1 = strtotime($start);
 							$datetime2 = strtotime($finish);
 							$secs = $datetime2 - $datetime1;
 							$minutes = $secs / 60;
+
+							if($paid == 0)
+							{
+								$totalMinutes=$totalMinutes + floor($minutes);
+								$restMinutes=$totalMinutes - floor($totalMinutes/60)*60;
+							}
+
+
 							echo "<td>".floor($minutes)." m</td>";
 							if ($paid == 0)
-								echo "<td><input type='checkbox' class='paid'></td>";
+								echo "<td><i class='fa fa-close' style='font-size:24px;color:red'></td>";
 							else
-								echo "<td><input type='checkbox' class='paid' checked></td>";
-							$totalMinutes=$totalMinutes + floor($minutes);
-							$restMinutes=$totalMinutes - floor($totalMinutes/60)*60;
+								echo "<td><i class='fa fa-check' style='font-size:24px;color:green'></i></td>";
 							echo "</tr>";
 						}
 					}
@@ -179,13 +188,15 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 			?>
 			<tr>
 				<td colspan="4"></td>
-				<td colspan="2"><?php echo floor($totalMinutes/60)." h e ". $restMinutes." m";?>
+				<td colspan="2"><?php echo floor($totalMinutes/60)." h e ". $restMinutes." m por pagar";?>
 					<hr>
 					<span>
 						<a href="http://meusalario.pt/salario/salariominimo">9 109,38€ de salário mínimo anual na madeira de 2020</a> /
 						<a href="https://www.dias-uteis.pt/dias-uteis_feriados_2020.htm">253 dias úteis</a>
 						/ 8 horas diárias * <?php echo floor($totalMinutes/60);?> horas = <?php echo round(9109.38/253/8*floor($totalMinutes/60));?>€
 					</span>
+					<hr>
+					<button style="position: relative; right: -80%;"type="button" class="btn btn-success pay">Pay</button>
 				</td>
 		    </tr>
 			</table>
@@ -193,17 +204,15 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 		</form>
 	</body>
 	<script>
-		for (var i = 0;; i++)
-		{
-			try
-			{
-				document.getElementsByClassName("paid")[i].disabled = true;
-			}
-			catch (e)
-			{
-				break;
-			}
-		}
+		$('.pay').click(function() {
+		  $.ajax({
+		    type: "POST",
+		    url: "paid.php"
+		  }).done(function() {
+			location.reload();
+		    alert("Hours paid");
+		  });
+		});
 	</script>
 </html>
 <?php
