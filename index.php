@@ -117,11 +117,12 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 							<th scope="col"style="width: 12.5%">inicio</th>
 							<th scope="col"style="width: 12.5%">fim</th>
 							<th scope="col"style="width: 18%">tempo total</th>
+							<th scope="col"style="width: 3%">pago</th>
 						</tr>
 					</thead>
 		<?php
 			//select worklog data from this user
-			$sql = "SELECT id, description, start, finish FROM worklog WHERE id_user = ?";
+			$sql = "SELECT id, description, start, finish, paid FROM worklog WHERE id_user = ?";
 			//for each row of data in worklog table, write a row in the html table
 			if($stmt = mysqli_prepare($link, $sql))
 			{
@@ -132,7 +133,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 					if(mysqli_stmt_num_rows($stmt) >= 1)
 					{
 						$i=0;//checker to see if number of current itteration == last table row
-						mysqli_stmt_bind_result($stmt, $id,$description, $start, $finish);
+						mysqli_stmt_bind_result($stmt, $id,$description, $start, $finish, $paid);
 						while (mysqli_stmt_fetch($stmt))
 						{
 							$i++;
@@ -159,6 +160,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 							$secs = $datetime2 - $datetime1;
 							$minutes = $secs / 60;
 							echo "<td>".floor($minutes)." m</td>";
+							echo "<td>".$paid."</td>";
 
 							$totalMinutes=$totalMinutes + floor($minutes);
 							$restMinutes=$totalMinutes - floor($totalMinutes/60)*60;
