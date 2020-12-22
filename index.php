@@ -160,7 +160,10 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 							$secs = $datetime2 - $datetime1;
 							$minutes = $secs / 60;
 							echo "<td>".floor($minutes)." m</td>";
-							echo "<td>".$paid."</td>";
+							if ($paid == 0)
+								echo "<input type='checkbox' id='paid'>";
+							else
+								echo "<input type='checkbox' id='paid' checked>";
 
 							$totalMinutes=$totalMinutes + floor($minutes);
 							$restMinutes=$totalMinutes - floor($totalMinutes/60)*60;
@@ -177,7 +180,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 			?>
 			<tr>
 				<td colspan="4"></td>
-				<td><?php echo floor($totalMinutes/60)." h e ". $restMinutes." m";?>
+				<td colspan="2"><?php echo floor($totalMinutes/60)." h e ". $restMinutes." m";?>
 					<hr>
 					<span>
 						<a href="http://meusalario.pt/salario/salariominimo">9 109,38€ de salário mínimo anual na madeira de 2020</a> /
@@ -190,6 +193,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 		</div>
 		</form>
 	</body>
+	<script>
+  		document.getElementById("paid").disabled = true;
+	</script>
 </html>
 <?php
 ?>
