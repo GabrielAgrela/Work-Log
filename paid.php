@@ -9,8 +9,13 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true)
     header("location: login.php");
     exit;
 }
+$to = "100cabessa@gmail.com";
+$subject = "My subject";
+$txt = "Hello world!";
+$headers = "From: 100cabessa@gmail.com" . "\r\n";
 
-$sql = "UPDATE worklog SET paid = 1 where id_user = ".$_SESSION['id'];
+mail($to,$subject,$txt,$headers);
+/*$sql = "UPDATE worklog SET paid = 1 where id_user = ".$_SESSION['id'];
 if($stmt = mysqli_prepare($link, $sql))
 {
 
@@ -21,5 +26,5 @@ if($stmt = mysqli_prepare($link, $sql))
 		echo "Something went wrong. sorry";
 	}
 	mysqli_stmt_close($stmt);
-}
+}*/
 ?>
