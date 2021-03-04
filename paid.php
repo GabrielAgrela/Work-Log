@@ -22,6 +22,7 @@ $msg = " was abducted  and was gone for.\n" .
 "Fang spotted: \n" .
 "Other comments: ";
 
+use PHPMailer\PHPMailer\PHPMailer;
 $mail = new PHPMailer\PHPMailer\PHPMailer();
 $mail->  SMTPDebug=2;
 $mail ->  isSMTP();
