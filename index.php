@@ -123,6 +123,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 						</tr>
 					</thead>
 		<?php
+					$stmt = mysqli_prepare($link, $sql)
 					echo "SESSIONNNNNNNNNNNN2".$sql." ".$stmt." ".$link;
 			//select worklog data from this user
 			$sql = "SELECT id, description, start, finish, paid FROM worklog WHERE id_user = ?";
