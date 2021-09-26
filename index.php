@@ -123,14 +123,12 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 						</tr>
 					</thead>
 		<?php
-					echo "SESSIONNNNNNNNNNNN2".$sql." ".$link;
 			//select worklog data from this user
 			$sql = "SELECT id, description, start, finish, paid FROM worklog WHERE id_user = ?";
 			//for each row of data in worklog table, write a row in the html table
 			if($stmt = mysqli_prepare($link, $sql))
 			{
 				mysqli_stmt_bind_param($stmt, "i", $_SESSION["id"]);
-				echo "SESSIONNNNNNNNNNNN".$_SESSION["id"];
 				if(mysqli_stmt_execute($stmt))
 				{
 					mysqli_stmt_store_result($stmt);
