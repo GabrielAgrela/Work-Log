@@ -123,7 +123,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 						</tr>
 					</thead>
 		<?php
-					echo "SESSIONNNNNNNNNNNN2".$_SESSION["id"];
+					echo "SESSIONNNNNNNNNNNN2".$sql." ".$stmt." ".$link;
 			//select worklog data from this user
 			$sql = "SELECT id, description, start, finish, paid FROM worklog WHERE id_user = ?";
 			//for each row of data in worklog table, write a row in the html table
