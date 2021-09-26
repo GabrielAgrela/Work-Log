@@ -191,9 +191,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and $_POST['startWork']=="stop")
 				<td colspan="2"><?php echo floor($totalMinutes/60)." h e ". $restMinutes." m por pagar";?>
 					<hr>
 					<span>
-						<a href="http://meusalario.pt/salario/salariominimo">9 109,38€ de salário mínimo anual na madeira de 2020</a> /
+						<a href="http://meusalario.pt/salario/salariominimo">9310€ de salário mínimo anual na madeira de 2020</a> /
 						<a href="https://www.dias-uteis.pt/dias-uteis_feriados_2020.htm">253 dias úteis</a>
-						/ 8 horas diárias * <?php echo floor($totalMinutes/60);?> horas = <?php echo round(9109.38/253/8*floor($totalMinutes/60));?>€
+						/ 8 horas diárias * <?php echo floor($totalMinutes/60);?> horas = <?php echo round(9310/253/8*floor($totalMinutes/60));?>€
 					</span>
 					<hr>
 					<button style="position: relative; right: -80%;"type="button" class="btn btn-success pay">Pay</button>
